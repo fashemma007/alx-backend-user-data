@@ -5,6 +5,19 @@ import re
 from typing import List
 
 
+def to_dict(msg) -> dict:
+    """takes nested k:v pairs and converts to dict"""
+    return_dict = {}
+    for item in msg:
+        try:
+            # [return_dict.update(item) for item in msg]
+            item = item.split("=")
+            return_dict[item[0]] = item[1]
+        except Exception:
+            pass
+    return return_dict
+
+
 def filter_datum(fields: List[str], redaction: str,
                  message: str, separator: str) -> str:
     """
@@ -18,8 +31,9 @@ def filter_datum(fields: List[str], redaction: str,
     :param separator:str: Separate the fields in the message
     :return: A string with the message and separator
     """
-    for key in fields:
-        pattern = key + r'(.*?)' + separator  # all chars btw key & sep
-        replacement = key + '=' + redaction + separator
-        message = re.sub(pattern, replacement, message)
+    new_message_dict = to_dict(message.split(separator))
+    # hide specified data
+    for field in fields:
+        pattern = new_message_dict[field]
+        message = re.sub(pattern, redaction, message)
     return message
