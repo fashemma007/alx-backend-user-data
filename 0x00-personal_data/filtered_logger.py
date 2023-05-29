@@ -58,12 +58,16 @@ def get_logger() -> logging.Logger:
 
     :return: A logger object
     """
-    logger = logging.getLogger("user_data")
-    logger.setLevel(logging.INFO)
+    # METHOD-1: using getLogger
+    # logger = logging.getLogger("user_data")
+    # logger.setLevel(logging.INFO)
+
+    # OR using the class itself
+    logger = logging.Logger("user_data", logging.INFO)
     formatter = RedactingFormatter(PII_FIELDS)
     handler = logging.StreamHandler()
     handler.setFormatter(formatter)
-    logger.propagate = False
+    logger.propagate = False  # ancestors shld not get events from dz
     logger.addHandler(handler)
 
     return logger
