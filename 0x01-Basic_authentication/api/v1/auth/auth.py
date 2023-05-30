@@ -21,6 +21,7 @@ class Auth:
         # print("\nHere ==================", string.endswith("/"))
         if not path.endswith("/"):
             path = path+"/"
+            # print(path)
         if (path is None) or (excluded_paths is None)\
                 or path not in excluded_paths:
             return True
@@ -28,7 +29,15 @@ class Auth:
 
     def authorization_header(self, request=None) -> str:
         """works with the header tag"""
-        return None
+        # print(request)
+        if request is None:
+            return None
+        headers = request.headers
+        # print(headers.get("Authorization"))
+        authorized = headers.get("Authorization", None)
+        if authorized is None:
+            return None
+        return authorized
 
     def current_user(self, request=None) -> TypeVar('User'):
         """return the current user"""
