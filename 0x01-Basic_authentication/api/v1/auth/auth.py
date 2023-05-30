@@ -1,3 +1,4 @@
+"""authentication class handler"""
 from typing import List, TypeVar
 from flask import request
 
