@@ -17,6 +17,13 @@ class Auth:
         not be checked for authentication
         :return: A boolean value
         """
+        # string = "abc/"
+        # print("\nHere ==================", string.endswith("/"))
+        if not path.endswith("/"):
+            path = path+"/"
+        if (path is None) or (excluded_paths is None)\
+                or path not in excluded_paths:
+            return True
         return False
 
     def authorization_header(self, request=None) -> str:

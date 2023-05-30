@@ -13,6 +13,33 @@ class TestAuth(unittest.TestCase):
         self.assertEqual(new_instance.require_auth(
             "/api/v1/status/", ["/api/v1/status/"]), False)
 
+    def test_require_auth_true_1(self):
+        """Test test_require_auth"""
+        new_instance = Auth()
+        self.assertEqual(new_instance.require_auth(
+            "/api/v1/users", ["/api/v1/status/", "/api/v1/stats"]), True)
+
+    def test_require_auth_true_2(self):
+        """Test test_require_auth empt list"""
+        new_instance = Auth()
+        self.assertEqual(new_instance.require_auth(
+            "/api/v1/status/", []), True)
+
+    def test_require_auth_missing_backslash(self):
+        """Test test_require_auth"""
+        new_instance = Auth()
+        excld = ["/api/v1/status/", "/api/v1/users/"]
+        self.assertEqual(new_instance.require_auth(
+            "/api/v1/status", excld), False)
+        self.assertEqual(new_instance.require_auth(
+            "/api/v1/users", excld), False)
+
+    def test_require_auth_true(self):
+        """Test test_require_auth true"""
+        new_instance = Auth()
+        self.assertEqual(new_instance.require_auth(
+            "/api/v1/forbidden/", ["/api/v1/status/"]), True)
+
     def test_authorization_header_none(self):
         """Test authorization_header"""
         new_instance = Auth()
