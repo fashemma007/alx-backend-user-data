@@ -65,24 +65,16 @@ class TestAuth(unittest.TestCase):
         new_instance = BasicAuth()
         self.assertEqual(
             new_instance.extract_base64_authorization_header(arg), result)
-        # self.assertEqual(
-        #     new_instance.extract_base64_authorization_header(89), None)
-        # self.assertEqual(
-        #     new_instance.extract_base64_authorization_header(
-        #         "Holberton School"), None
-        # )
-        # self.assertEqual(
-        #     new_instance.extract_base64_authorization_header(
-        #         "Basic Holberton"), "Holberton")
 
-        # self.assertEqual(
-        #     new_instance.extract_base64_authorization_header(
-        #         "Basic SG9sYmVydG9u"), "SG9sYmVydG9u")
-
-        # self.assertEqual(
-        #     new_instance.extract_base64_authorization_header(
-        #         "Basic SG9sYmVydG9uIFNjaG9vbA=="), "SG9sYmVydG9uIFNjaG9vbA==")
-
-        # self.assertEqual(
-        #     new_instance.extract_base64_authorization_header(
-        #         "Basic1234"), None)
+    @parameterized.expand([
+        (None, None),
+        (89, None),
+        ("Holberton School", None),
+        ("SG9sYmVydG9u", "Holberton"),
+        ("SG9sYmVydG9uIFNjaG9vbA==", "Holberton School"),
+    ])
+    def test_decode_base64_authorization_header(self, arg, result):
+        """test decode_base64_authorization_header"""
+        new_instance = BasicAuth()
+        self.assertEqual(
+            new_instance.decode_base64_authorization_header(arg), result)
