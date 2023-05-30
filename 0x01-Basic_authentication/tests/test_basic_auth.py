@@ -78,3 +78,16 @@ class TestAuth(unittest.TestCase):
         new_instance = BasicAuth()
         self.assertEqual(
             new_instance.decode_base64_authorization_header(arg), result)
+
+    @parameterized.expand([
+        (None, (None, None)),
+        (89, (None, None)),
+        ("Holberton School", (None, None)),
+        ("Holberton:School", ("Holberton", "School")),
+        ("bob@gmail.com:toto1234", ("bob@gmail.com", "toto1234")),
+    ])
+    def test_extract_user_credentials(self, arg, result):
+        """test extract_user_credentials"""
+        new_instance = BasicAuth()
+        self.assertEqual(
+            new_instance.extract_user_credentials(arg), result)
