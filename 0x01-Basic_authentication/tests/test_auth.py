@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """Test Auth class and methods"""
 import unittest
 from api.v1.auth.auth import Auth
