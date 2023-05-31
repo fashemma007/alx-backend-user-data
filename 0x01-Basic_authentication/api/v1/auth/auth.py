@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """authentication class handler"""
+import re
 from typing import List, TypeVar
 from flask import request
 
@@ -24,8 +25,9 @@ class Auth:
         if not path.endswith("/"):
             path = path+"/"
         for exlc in excluded_paths:
-            if exlc.endswith("*"):
-                exlc.replace("*", "/")
+            if re.match(exlc, path):
+                print(exlc)
+                return False
         if path not in excluded_paths:
             return True
             # print(path)
