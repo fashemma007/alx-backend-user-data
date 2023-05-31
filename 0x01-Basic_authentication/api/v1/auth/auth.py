@@ -19,15 +19,16 @@ class Auth:
         """
         # string = "abc/"
         # print("\nHere ==================", string.endswith("/"))
+        if (path is None) or (excluded_paths is None):
+            return True
         if not path.endswith("/"):
             path = path+"/"
         for exlc in excluded_paths:
             if exlc.endswith("*"):
                 exlc.replace("*", "/")
-            # print(path)
-        if (path is None) or (excluded_paths is None)\
-                or path not in excluded_paths:
+        if path not in excluded_paths:
             return True
+            # print(path)
         return False
 
     def authorization_header(self, request=None) -> str:
