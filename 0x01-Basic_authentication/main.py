@@ -6,7 +6,7 @@ if __name__ == "__main__":
     from api.v1.auth.auth import Auth
 
     a = Auth()
-    path = "/api/v1/users"
+    path = "/api/v1/usual/"
     paths_excluded = ["/api/v1/us*"]
     res = a.require_auth(path, paths_excluded)
     if res:

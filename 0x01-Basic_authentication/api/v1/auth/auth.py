@@ -26,7 +26,7 @@ class Auth:
             path = path+"/"
         for exlc in excluded_paths:
             if re.match(exlc, path):
-                print(exlc)
+                # print(exlc)
                 return False
         if path not in excluded_paths:
             return True
