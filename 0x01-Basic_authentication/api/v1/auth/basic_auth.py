@@ -52,7 +52,10 @@ class BasicAuth(Auth):
                 or (not isinstance(user_email, str))\
                 or (not isinstance(user_pwd, str)):
             return None
-        users = User.search({'email': user_email})
+        try:
+            users = User.search({'email': user_email})
+        except KeyError:
+            return None
         if not users:
             return None
         # [print(user.__dict__) for user in users]
