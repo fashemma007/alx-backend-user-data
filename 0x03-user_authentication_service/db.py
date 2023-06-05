@@ -69,7 +69,7 @@ class DB:
         for key in keyz:
             if key not in table_columns:
                 raise ValueError
-            user.__setattr__(key, kwargs[key])
+            setattr(user, key, kwargs[key])
             # user.update(key, kwargs[key])
         # print(user.hashed_password)
         self._session.commit()
