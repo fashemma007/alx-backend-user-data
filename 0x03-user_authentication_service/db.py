@@ -60,3 +60,16 @@ class DB:
         if not found:
             raise NoResultFound
         return found
+
+    def update_user(self, user_id: int, **kwargs):
+        """update a user whose, id is given"""
+        table_columns = list(User.__dict__.keys())
+        keyz = kwargs.keys()
+        user = self.find_user_by(id=user_id)
+        for key in keyz:
+            if key not in table_columns:
+                raise ValueError
+            user.__setattr__(key, kwargs[key])
+            # user.update(key, kwargs[key])
+        # print(user.hashed_password)
+        self._session.commit()
