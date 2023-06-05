@@ -2,7 +2,6 @@
 """DB module
 """
 from sqlalchemy import create_engine
-from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
 from sqlalchemy.exc import InvalidRequestError, NoResultFound
@@ -54,7 +53,7 @@ class DB:
                 raise InvalidRequestError
             value = kwargs[key]
             search[key] = value
-        found = self.__session.query(User).filter_by(**search).first()
+        found = self._session.query(User).filter_by(**search).first()
         # print(found.email)
         if not found:
             raise NoResultFound
