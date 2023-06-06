@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """module docs for app.py"""
-from flask import Flask, Response, jsonify, request
+from flask import Flask, Response, abort, jsonify, request, make_response
 from auth import Auth
 
 
@@ -30,6 +30,24 @@ def register_user():
     # print(new_user.hashed_password)
     return jsonify({
         "email": f"{new_user.email}", "message": "user created"}), 200
+
+
+@app.route("/sessions", methods=["POST"], strict_slashes=False)
+def login():
+    """login handler"""
+    credentials = request.form
+    if 'email' not in credentials or\
+            'password' not in credentials:
+        abort(401)
+    email = credentials.get("email")
+    password = credentials.get("password")
+    valid = AUTH.valid_login(email, password)
+    if valid:
+        session_id = AUTH.create_session(email)
+        response = make_response({"email": f"{email}", "message": "logged in"})
+        response.set_cookie("session_id", session_id)
+        return response, 200
+    abort(401)
 
 
 if __name__ == "__main__":
