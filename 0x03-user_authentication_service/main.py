@@ -4,12 +4,9 @@ Main file
 """
 
 from auth import Auth
-
-email = 'bob@bob.com'
-password = 'MyPwdOfBob'
+session_id = '8836deab-0121-4140-ac4e-7e7d8697d95e'
 auth = Auth()
 
-auth.register_user(email, password)
-
-print(auth.create_session(email))
+user = auth.get_user_from_session_id(session_id)
+print(user.email)
 print(auth.create_session("unknown@email.com"))
