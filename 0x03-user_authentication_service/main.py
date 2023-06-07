@@ -12,25 +12,16 @@ password = "f@sogb@emm@"
 user = auth.register_user(email, password)
 valid_user = auth.valid_login(email, password)
 if valid_user:
-    print(f"Logged in as {email}")
+    print(f"Logged in as {email}\n")
 else:
-    print("Incorrect credentials")
+    print("Incorrect credentials\n")
 session_id = auth.create_session(user.email)
 found_user = auth.get_user_from_session_id(session_id)
-print(found_user.email)
 
 
-password = "f@@emm@"
+print(f"Session id for {user.email}", user.session_id)
 
-valid_user = auth.valid_login(email, password)
-if valid_user:
-    print(f"Logged in as {email}")
-else:
-    print("Incorrect credentials")
-session_id = user.session_id
-found_user = auth.get_user_from_session_id(session_id)
-print(found_user.email)
+print(f"Destroying session of user {user.email}")
+auth.destroy_session(user.id)
 
-session_id = 'wrongsessionid'
-found_user = auth.get_user_from_session_id(session_id)
-print(found_user.email)
+print("", user.session_id)
