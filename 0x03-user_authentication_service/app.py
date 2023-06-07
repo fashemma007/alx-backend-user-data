@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """module docs for app.py"""
-from flask import Flask, Response, abort, jsonify, request, make_response
+from flask import Flask, Response, abort, jsonify, redirect, request, make_response, url_for
 from auth import Auth
 
 
@@ -48,6 +48,18 @@ def login():
         response.set_cookie("session_id", session_id)
         return response, 200
     abort(401)
+
+
+@app.route("/sessions", methods=["DELETE"], strict_slashes=False)
+def logout():
+    """destroys and logout a user"""
+    session_id = request.cookies.get('session_id')
+    user = AUTH.get_user_from_session_id(session_id)
+    if user:
+        AUTH.destroy_session(user.id)
+        return redirect(url_for('welcome'), 200)
+    else:
+        abort(403)
 
 
 if __name__ == "__main__":
