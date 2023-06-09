@@ -60,7 +60,7 @@ class DB:
             raise NoResultFound
         return found
 
-    def update_user(self, user_id: int, **kwargs):
+    def update_user(self, user_id: int, **kwargs) -> None:
         """update a user whose, id is given"""
         table_columns = list(User.__dict__.keys())
         keyz = kwargs.keys()
